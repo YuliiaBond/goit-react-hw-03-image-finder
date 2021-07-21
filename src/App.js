@@ -1,18 +1,49 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Searchbar from './components/Searchbar';
+import Container from './components/Container'
 import ImageGallery from './components/ImageGallery';
+import Modal from './components/Modal/Modal';
 
-const App = () => {
-  return (
-    <>
-      <h1>Hellooooo!!!</h1>
+class App extends Component {
+  state = {
+    showModal: false,
+  };
 
-      <Searchbar />
+  toogleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
 
-      <ImageGallery />
+  render() {
+    const { showModal } = this.state;
+    return (
+      <>
+        <Searchbar />
 
-    </>
-  );
+        <Container>
+
+        <ImageGallery />
+
+        <button type="button" onClick={this.toogleModal}>
+          Open modal
+        </button>
+
+        {showModal && (
+          <Modal>
+            <h2>hello</h2>
+            <img src="" alt="" />
+            <button type="button" onClick={this.toogleModal}>Close</button>
+          </Modal>
+        )
+        }
+        </Container>
+        </>
+    );
+  }
 };
+            
+      
+
 
 export default App;
