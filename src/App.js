@@ -30,8 +30,7 @@ class App extends Component {
         </button>
 
         {showModal && (
-          <Modal>
-            <h2>hello</h2>
+          <Modal onClose = {this.toogleModal}>
             <img src="" alt="" />
             <button type="button" onClick={this.toogleModal}>Close</button>
           </Modal>
