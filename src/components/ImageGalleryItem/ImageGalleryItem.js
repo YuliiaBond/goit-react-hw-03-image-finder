@@ -1,9 +1,7 @@
 import React from 'react';
 import '../../style.css';
 
-const ImageGalleryItem = () => (
-    <li className="ImageGalleryItem">
-        <img src="" alt="" className="ImageGalleryItem-image" />
-    </li>
+const ImageGalleryItem = ({webformatURL, tags}) => (
+    <img src={webformatURL} alt={tags} className="ImageGalleryItem-image" />
 );
 export default ImageGalleryItem;
