@@ -10,20 +10,36 @@ import Modal from './components/Modal/Modal';
 class App extends Component {
   state = {
     hits: [],
+    searchQuery: '',
+    currentPage: 1,
     showModal: false,
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      this.fetchHits();
+    };
+  };
+
   onChangeQuery = query => {
+    this.setState({ searchQuery: query, currentPage: 1, hits: [] });
+  };
+
+  fetchHits = () => {
+    const { searchQuery, currentPage } = this.state;
+
     axios
       .get(
-        `https://pixabay.com/api/?q=${query}&page=1&key=21813787-5b33d57d4a7410a6824d2f569&image_type=photo&orientation=horizontal&per_page=12`
+        `https://pixabay.com/api/?q=${searchQuery}&page=${currentPage}&key=21813787-5b33d57d4a7410a6824d2f569&image_type=photo&orientation=horizontal&per_page=12`
       )
       .then(response => {
-        this.setState({
-          hits: response.data.hits
-        });
+        this.setState(prevState => ({
+          hits: [...prevState.hits, ...response.data.hits],
+          currentPage: prevState.currentPage + 1,
+        }));
       });
-  };
+
+  }
 
   toogleModal = () => {
     this.setState(({ showModal }) => ({
@@ -42,6 +58,8 @@ class App extends Component {
           <ImageGallery
           hits={hits}
           />
+
+          <button type="button" onClick={this.fetchHits}>Load more</button>
 
         <button type="button" onClick={this.toogleModal}>
           Open modal
