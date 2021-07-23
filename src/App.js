@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Searchbar from './components/Searchbar';
 import Container from './components/Container'
 import ImageGallery from './components/ImageGallery';
 import Modal from './components/Modal/Modal';
-
-// axios.defaults.headers.common['Authorization'] = 'Bearer 21813787-5b33d57d4a7410a6824d2f569';
+import hitsApi from './services/hits-api';
 
 class App extends Component {
   state = {
     hits: [],
     searchQuery: '',
     currentPage: 1,
+    isLoading: false,
     showModal: false,
+    error: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -22,22 +22,28 @@ class App extends Component {
   };
 
   onChangeQuery = query => {
-    this.setState({ searchQuery: query, currentPage: 1, hits: [] });
+    this.setState({ searchQuery: query, currentPage: 1, hits: [], error: null });
   };
 
   fetchHits = () => {
     const { searchQuery, currentPage } = this.state;
 
-    axios
-      .get(
-        `https://pixabay.com/api/?q=${searchQuery}&page=${currentPage}&key=21813787-5b33d57d4a7410a6824d2f569&image_type=photo&orientation=horizontal&per_page=12`
-      )
-      .then(response => {
+    const options = {
+      searchQuery,
+      currentPage,
+    };
+
+    this.setState({ isLoading: true });
+
+    hitsApi.fetchHits(options)
+      .then(hits => {
         this.setState(prevState => ({
-          hits: [...prevState.hits, ...response.data.hits],
+          hits: [...prevState.hits, ...hits],
           currentPage: prevState.currentPage + 1,
         }));
-      });
+      })
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
 
   }
 
@@ -48,9 +54,11 @@ class App extends Component {
   };
 
   render() {
-    const { hits, showModal } = this.state;
+    const { hits, isLoading, showModal, error } = this.state;
     return (
       <>
+        {error && <h1>ERROR!!!</h1>}
+
         <Searchbar onSubmit={this.onChangeQuery}/>
 
         <Container>
@@ -59,7 +67,16 @@ class App extends Component {
           hits={hits}
           />
 
-          <button type="button" onClick={this.fetchHits}>Load more</button>
+          {isLoading && (
+            <h1>Loading...</h1>
+          )}
+
+          {hits.length > 0 && !isLoading && (
+            <button type="button" onClick={this.fetchHits}>
+            Load more
+          </button>
+          )}
+          
 
         <button type="button" onClick={this.toogleModal}>
           Open modal
