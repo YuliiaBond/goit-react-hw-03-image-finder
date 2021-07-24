@@ -11,6 +11,6 @@ const loader = () => (
         width={100}
         timeout={3000} //3 secs
     />
-  );
+);
 
 export default loader;

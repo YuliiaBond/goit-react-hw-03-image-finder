@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import '../../style.css';
 import PropTypes from 'prop-types';
-
+import '../../style.css';
 class Searchbar extends Component {
     static propTypes = {
         query: PropTypes.string,
