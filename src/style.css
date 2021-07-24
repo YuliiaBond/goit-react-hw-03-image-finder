@@ -173,24 +173,29 @@ img {
 }
 
 .Modal {
-  /* max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 24px); */
-  width: 200px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 24px);
+  /* width: 200px;
   height: 200px;
   border: 2px solid red;
-  background-color: #fff;
+  background-color: #fff; */
 }
 
 /*
 * Стили компонента Buton (Load more)
 */
 .Button {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 8px 16px;
   border-radius: 2px;
   background-color: #3f51b5;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
-  display: inline-block;
   color: #fff;
   border: 0;
   text-decoration: none;
@@ -208,4 +213,12 @@ img {
 .Button:hover,
 .Button:focus {
   background-color: #303f9f;
+}
+
+.Loader {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

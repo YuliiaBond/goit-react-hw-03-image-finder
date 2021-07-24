@@ -8,4 +8,4 @@ const fetchHits = ({ searchQuery = '', currentPage = 1, pageSize = 12 }) => {
     .then(response =>response.data.hits)
 }
 
-export default { fetchHits }
+export default fetchHits;

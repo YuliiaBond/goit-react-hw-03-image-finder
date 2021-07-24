@@ -5,13 +5,13 @@ import '../../style.css';
 const modalRoot = document.querySelector('#modal-root');
 class Modal extends Component {
     componentDidMount() {
-        console.log(111);
+        // console.log(111);
 
         window.addEventListener('keydown', this.handleKeyDown)
     };
 
     componentWillUnmount() {
-        console.log(333);
+        // console.log(333);
 
         window.removeEventListener('keydown', this.handleKeyDown)
     };
